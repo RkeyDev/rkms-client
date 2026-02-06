@@ -1,52 +1,18 @@
-import './register-styles.css'
-
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
 
 function App() {
 
-  const handleSubmit = async (e)=>{
-    //TODO handle register
-  };
-
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h1>RKMS - Register</h1>
-        
-        <div id="inputs-container">
-          <label>First Name</label> 
-          <input placeholder="E.g Jhon" required></input>
+   <Router>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
 
-          <label>Last Name</label>
-          <input placeholder="E.g Smith" required></input>
-
-
-          <label>Email</label> 
-          <input type="email" placeholder="E.g jhonsmith123@gmail.com" required></input>
-
-          <label>Company Name</label> 
-          <input placeholder="E.g Smith Company Inc." required></input>
-
-
-          <label >Password</label> <span id="password-hint">?</span> 
-          <input type="password" placeholder="E.g aaBBccDD11223344!" required></input>
-
-          <label>Confirm Password</label> 
-          <input type="password" placeholder="Same as password" required></input>
-        </div>
-
-        <div id="checkbox-container">
-          <input type="checkbox" required></input>
-          <label>I agree to the <a>Terms of Service</a></label>
-          <input type="checkbox"></input>
-          <label>Remember Me</label>
-        </div>
-        
-        <button type="submit">Create Account</button>
-        <label>Already have an account? <a>Sign in</a>.</label>
-      </form>
-      
-      
-    </div>
+        <Route path="/" element={<Navigate to="/register" />} />
+      </Routes>
+    </Router>
   );
 }
 
