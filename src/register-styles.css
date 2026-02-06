@@ -132,7 +132,6 @@ h1 {
     justify-content: center;
     align-items: center;
     font-size: 0.8rem;
-    cursor: help;
     z-index: 2;
 }
 
@@ -178,7 +177,6 @@ button[type="submit"] {
     background-color: #557b5e;
     color: white;
     font-size: 1.3rem;
-    font-weight: bold;
     border: none;
     border-radius: 5px;
     padding: 12px;
@@ -199,4 +197,65 @@ form > label:last-child {
     width: 100%;
     color: #ccc;
     font-size: 0.95rem;
+}
+
+/* Ensure the hint is the anchor */
+#password-hint {
+    position: relative;
+}
+
+/* The Tooltip Box */
+#password-hint:hover::after {
+    /* \A creates a new line */
+    content: "• Must be at least 8 characters long \A • Must include one lower case letter \A • Must include one upper case letter \A • Must include numbers \A • Must include a special character (e.g !@#$%.?)"; 
+    
+    /* Crucial: this allows the \A to actually break the line */
+    white-space: pre-wrap; 
+    
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Styling */
+    background-color: #141313;
+    color: #fff;
+    width: 350px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: left; /* List looks better left-aligned */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    
+    /* Entrance Animation */
+    opacity: 0;
+    animation: tooltipFade 0.2s forwards;
+    pointer-events: none;
+}
+
+/* The Little Triangle Arrow */
+#password-hint:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+    opacity: 0;
+    animation: tooltipFade 0.2s forwards;
+}
+
+@keyframes tooltipFade {
+    from { 
+        opacity: 0; 
+        transform: translateX(-50%) translateY(5px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(-50%) translateY(0); 
+    }
 }
