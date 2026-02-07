@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Alatsi&display=swap');
+
+/* Global Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Alatsi', sans-serif !important;
+}
+
+body{
+    background-color: #232528;
+}
+
+a{
+    color: #1695FD;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #60b5fa;
+    text-decoration: underline;
+}
+
