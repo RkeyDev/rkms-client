@@ -1,3 +1,5 @@
+/* sidebar-styles.module.css */
+
 .sidebarContainer {
     background-color: #1a1a1a;
     width: 260px;
@@ -8,14 +10,14 @@
     color: white;
     font-family: sans-serif;
     box-sizing: border-box;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease;
     overflow: hidden;
 }
 
-/* Closed State: Burger stays visible */
+/* Closed State */
 .sidebarContainer.closed {
     width: 80px;
-    padding: 25px 15px; /* Narrower padding for centering */
+    padding: 25px 0; 
 }
 
 /* --- Header & Burger --- */
@@ -25,25 +27,31 @@
     align-items: center;
     margin-bottom: 50px;
     width: 100%;
+    padding: 0 25px; 
+    box-sizing: border-box;
+    user-select: none;
+    transition: padding 0.5s ease;
 }
 
 .closed .header {
-    justify-content: center; /* Centers the burger when logo is gone */
+    justify-content: center;
+    padding: 0;
 }
 
 .logo {
     font-size: 1.8rem;
     font-weight: bold;
     margin: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
     white-space: nowrap;
+    transition: opacity 0.3s ease, transform 0.4s ease, width 0.4s ease;
 }
 
 .closed .logo {
     opacity: 0;
-    width: 0; /* Effectively removes it from the flex flow */
+    width: 0;
     transform: translateX(-10px);
     pointer-events: none;
+    visibility: hidden;
 }
 
 .burgerBtn {
@@ -52,10 +60,14 @@
     color: white;
     font-size: 1.8rem;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
 }
 
 /* --- Profile & Avatar --- */
@@ -79,8 +91,9 @@
     font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 12px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
+    user-select: none;
 }
 
 .closed .avatar {
@@ -95,13 +108,14 @@
     text-decoration: underline;
     font-weight: 500;
     white-space: nowrap;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .closed .profileName {
     opacity: 0;
     transform: translateY(5px);
     pointer-events: none;
+    visibility: hidden;
 }
 
 /* --- Navigation --- */
@@ -110,6 +124,12 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 0 10px;
+}
+
+.closed .navLinks {
+    padding: 0;
+    align-items: center;
 }
 
 .navItem {
@@ -120,34 +140,39 @@
     padding: 12px;
     display: flex;
     align-items: center;
-    gap: 20px;
     border-radius: 10px;
     transition: all 0.3s ease;
-}
-
-.closed .navItem {
-    justify-content: center;
-    gap: 0;
-}
-
-.navIcon {
-    font-size: 1.5rem;
-}
-
-.navText {
-    transition: opacity 0.3s ease;
     white-space: nowrap;
 }
 
-.closed .navText {
-    opacity: 0;
-    width: 0;
-    display: none;
+.navItem:not(.active):hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.023);
 }
 
 .active {
     color: white;
     background-color: rgba(255, 255, 255, 0.1);
+    cursor: default;
+}
+
+/* THIS SECTION HANDLES THE "IMMEDIATE REMOVAL" */
+.closed .navItem {
+    padding: 12px 0;
+    pointer-events: none;
+    background-color: transparent !important; /* Forces background to vanish */
+    color: transparent !important;            /* Forces text/active color to vanish */
+    transition: none !important;              /* Removes transition so it's instant */
+}
+
+.navText {
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.closed .navText {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
 }
 
 /* --- Logout --- */
@@ -155,35 +180,41 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 20px;
+    padding: 20px 25px 0 25px;
     border-top: 1px solid #333;
+    transition: border-color 0.4s ease, padding 0.5s ease;
 }
 
 .closed .logoutSection {
     justify-content: center;
+    border-top-color: transparent;
+    padding: 20px 0 0 0;
 }
 
 .logoutText {
     font-weight: bold;
     color: #999;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
 }
 
 .closed .logoutText {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
 }
 
-
-.logoutBtn{
-    background-color: rgba(0, 0, 0, 0);
+.logoutBtn {
+    background-color: transparent;
     outline: none;
     border: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
 }
 
 .logoutBtn img {
     width: 24px;
     filter: invert(0.7);
     transition: filter 0.3s ease;
-    
-
 }

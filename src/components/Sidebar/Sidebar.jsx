@@ -27,7 +27,6 @@ function Sidebar({ page, name }) {
   return (
     <div className={containerClass}>
       <div className={styles.header}>
-        {/* We keep the H1 in the DOM so the layout doesn't jump */}
         <h1 className={styles.logo}>RKMS</h1>
         <button className={styles.burgerBtn} onClick={toggleSidebar}>
           ☰
@@ -43,15 +42,12 @@ function Sidebar({ page, name }) {
 
       <nav className={styles.navLinks}>
         <div className={getNavLinkClass("dashboard")}>
-          <span className={styles.navIcon}>📊</span>
           <span className={styles.navText}>Dashboard</span>
         </div>
         <div className={getNavLinkClass("endpoints")}>
-          <span className={styles.navIcon}>🔌</span>
           <span className={styles.navText}>Endpoints</span>
         </div>
         <div className={getNavLinkClass("connection")}>
-          <span className={styles.navIcon}>📡</span>
           <span className={styles.navText}>Connection</span>
         </div>
       </nav>
