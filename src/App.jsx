@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Verification from './components/Verification/Verification';
+import Dashbord from './components/Dashboard/Dashboard';
 function App() {
 
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verification" element={<Verification />} />
+        <Route path="/dashboard" element={<Dashbord />} />
 
         <Route path="/" element={<Navigate to="/register" />} />
       </Routes>
