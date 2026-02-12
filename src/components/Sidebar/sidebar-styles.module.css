@@ -1,6 +1,7 @@
 /* sidebar-styles.module.css */
 
 .sidebarContainer {
+    position: fixed;
     background-color: #1a1a1a;
     width: 260px;
     height: 100vh;
