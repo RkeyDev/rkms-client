@@ -1,4 +1,5 @@
 import Sidebar from "../Sidebar/Sidebar";
+import Table from "../Table/Table"; // Import your new component
 import styles from "../Dashboard/dashboard-styles.module.css";
 
 const TEAMS_DATA = [
@@ -6,10 +7,47 @@ const TEAMS_DATA = [
   { id: 2, name: "Marketing", manager: "Noam STC", endpoints: 6 },
   { id: 3, name: "Sales", manager: "Noam STC", endpoints: 2 },
   { id: 4, name: "IT Support", manager: "Jhon Smith", endpoints: 23 },
-  { id: 5, name: "Costumer Su...", manager: "Piti Levi", endpoints: 15 },
+  { id: 5, name: "Costumer Support", manager: "Piti Levi", endpoints: 15 },
 ];
 
-function Dashbord() {
+function Dashboard() {
+  
+  // Define columns configuration
+  const teamColumns = [
+    {
+      header: "",
+      accessor: "id",
+      width: "30px",
+      cellClassName: styles.idCell, 
+    },
+    {
+      header: "Team Name",
+      accessor: "name",
+    },
+    {
+      header: "Manager",
+      accessor: "manager",
+    },
+    {
+      header: "Endpoints",
+      accessor: "endpoints",
+    },
+    {
+      header: "Actions",
+      accessor: "actions", // This key doesn't exist in data, but that's fine because we use 'render'
+      cellClassName: styles.actionCell,
+      // Custom render logic for buttons
+      render: (row) => (
+        <>
+          <button className={styles.viewBtn} onClick={() => console.log("View", row.id)}>
+            View
+          </button>
+          <button className={styles.settingsBtn}>Settings</button>
+        </>
+      ),
+    },
+  ];
+
   return (
     <div className={styles.pageWrapper}>
       <Sidebar page="Dashboard" name="Roei Kleiner" />
@@ -24,38 +62,12 @@ function Dashbord() {
             <button className={styles.createBtn}>Create New Team</button>
           </div>
 
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th style={{ width: "30px" }}></th>
-                <th>Team Name</th>
-                <th>Manager</th>
-                <th>Endpoints</th>
-                <th style={{ textAlign: "center" }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {TEAMS_DATA.map((team) => (
-                <tr key={team.id}>
-                  <td className={styles.idCell}>{team.id}</td>
-                  <td>{team.name}</td>
-                  <td>{team.manager}</td>
-                  <td>{team.endpoints}</td>
-                  <td className={styles.actionCell}>
-                    <button className={styles.viewBtn}>View</button>
-                    <button className={styles.settingsBtn}>Settings</button>
-                  </td>
-                </tr>
-              ))}
-              {/* Empty filler rows to match UI design */}
-              {[6, 7, 8, 9].map((id) => (
-                <tr key={id} className={styles.emptyRow}>
-                  <td className={styles.idCell}>{id}</td>
-                  <td></td><td></td><td></td><td></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {/* Reusable Table Component */}
+          <Table 
+            columns={teamColumns} 
+            data={TEAMS_DATA} 
+            minRows={9} // Keeps your empty rows design
+          />
 
           <div className={styles.footer}>
             <div className={styles.navBtns}>
@@ -70,4 +82,4 @@ function Dashbord() {
   );
 }
 
-export default Dashbord;
+export default Dashboard;
