@@ -1,49 +1,48 @@
 import Sidebar from "../Sidebar/Sidebar";
-import Table from "../Table/Table"; // Import your new component
-import styles from "../Dashboard/dashboard-styles.module.css";
+import Table from "../Table/Table";
+import styles from "./dashboard-styles.module.css";
 
 const TEAMS_DATA = [
-  { id: 1, name: "Development", manager: "Roei Kleiner", endpoints: 44 },
-  { id: 2, name: "Marketing", manager: "Noam STC", endpoints: 6 },
-  { id: 3, name: "Sales", manager: "Noam STC", endpoints: 2 },
-  { id: 4, name: "IT Support", manager: "Jhon Smith", endpoints: 23 },
-  { id: 5, name: "Costumer Support", manager: "Piti Levi", endpoints: 15 },
+  { name: "Development", manager: "Roei Kleiner", endpoints: 44 },
+  { name: "Marketing", manager: "Noam STC", endpoints: 6 },
+  { name: "Sales", manager: "Noam STC", endpoints: 2 },
+  { name: "IT Support", manager: "Jhon Smith", endpoints: 23 },
+  { name: "Customer Support", manager: "Piti Levi", endpoints: 15 },
+  { name: "DevOps", manager: "Roei Kleiner", endpoints: 12 },
+  { name: "HR", manager: "Sara J", endpoints: 4 },
+  { name: "Legal", manager: "Mike Ross", endpoints: 1 },
+    { name: "Sales", manager: "Noam STC", endpoints: 2 },
+  { name: "IT Support", manager: "Jhon Smith", endpoints: 23 },
+  { name: "Customer Support", manager: "Piti Levi", endpoints: 15 },
+  { name: "DevOps", manager: "Roei Kleiner", endpoints: 12 },
+  { name: "HR", manager: "Sara J", endpoints: 4 },
+  { name: "Legal", manager: "Mike Ross", endpoints: 1 },
+  
 ];
 
 function Dashboard() {
-  
-  // Define columns configuration
   const teamColumns = [
     {
       header: "",
       accessor: "id",
-      width: "30px",
+      width: "50px", // Fixed width for the ID column
       cellClassName: styles.idCell, 
     },
-    {
-      header: "Team Name",
-      accessor: "name",
-    },
-    {
-      header: "Manager",
-      accessor: "manager",
-    },
-    {
-      header: "Endpoints",
-      accessor: "endpoints",
-    },
+    { header: "Team Name", accessor: "name", width: "200px" },
+    { header: "Manager", accessor: "manager", width: "150px" },
+    { header: "Endpoints", accessor: "endpoints", width: "100px" },
     {
       header: "Actions",
-      accessor: "actions", // This key doesn't exist in data, but that's fine because we use 'render'
+      accessor: "actions", 
       cellClassName: styles.actionCell,
-      // Custom render logic for buttons
+      width: "250px",
       render: (row) => (
-        <>
-          <button className={styles.viewBtn} onClick={() => console.log("View", row.id)}>
+        <div className={styles.actionWrapper}>
+          <button className={styles.viewBtn} onClick={() => console.log("View", row.name)}>
             View
           </button>
           <button className={styles.settingsBtn}>Settings</button>
-        </>
+        </div>
       ),
     },
   ];
@@ -62,20 +61,11 @@ function Dashboard() {
             <button className={styles.createBtn}>Create New Team</button>
           </div>
 
-          {/* Reusable Table Component */}
           <Table 
             columns={teamColumns} 
             data={TEAMS_DATA} 
-            minRows={9} // Keeps your empty rows design
+            minRows={9} 
           />
-
-          <div className={styles.footer}>
-            <div className={styles.navBtns}>
-              <button className={styles.navBtn}>Previous</button>
-              <button className={styles.navBtn}>Next</button>
-            </div>
-            <span className={styles.pageInfo}>Page 1 of 1</span>
-          </div>
         </div>
       </main>
     </div>

@@ -1,57 +1,94 @@
-import styles from "./table-styles.module.css"; 
+import { useState } from "react";
+import styles from "./table-styles.module.css";
 
-const Table = ({ columns, data, minRows = 0 }) => {
-  
-  // Calculate how many empty rows are needed to meet the minRows requirement
-  const emptyRowsCount = Math.max(0, minRows - data.length);
-  const emptyRows = Array.from({ length: emptyRowsCount }, (_, i) => i);
+const Table = ({ columns, data, minRows = 9, rowsPerPage = minRows }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Pagination Calculations
+  const totalPages = Math.max(1, Math.ceil(data.length / rowsPerPage));
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const currentData = data.slice(startIndex, startIndex + rowsPerPage);
+
+  // Logic to keep table size identical: 
+  // We always want to show 'minRows' total.
+  const emptyRowsNeeded = Math.max(0, minRows - currentData.length);
+  const emptyRows = Array.from({ length: emptyRowsNeeded }, (_, i) => i);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  };
 
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          {columns.map((col, index) => (
-            <th 
-              key={index} 
-              style={col.width ? { width: col.width } : {}}
-              className={col.headerClassName || ""}
-            >
-              {col.header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {/* Render Actual Data */}
-        {data.map((row, rowIndex) => (
-          <tr key={row.id || rowIndex}>
-            {columns.map((col, colIndex) => (
-              <td key={`${rowIndex}-${colIndex}`} className={col.cellClassName || ""}>
-                {/* If a custom 'render' function is provided in the column config, use it.
-                  Otherwise, just display the data text based on the accessor key.
-                */}
-                {col.render 
-                  ? col.render(row) 
-                  : row[col.accessor]}
-              </td>
+    <div className={styles.tableWrapper}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            {columns.map((col, index) => (
+              <th
+                key={index}
+                style={col.width ? { width: col.width, minWidth: col.width } : {}}
+                className={col.headerClassName || ""}
+              >
+                {col.header}
+              </th>
             ))}
           </tr>
-        ))}
-
-        {/* Render Empty Filler Rows (if any) */}
-        {emptyRows.map((id) => (
-          <tr key={`empty-${id}`} className={styles.emptyRow}>
-            {/* Render a cell for the ID, then empty cells for the rest */}
-             {columns.map((col, index) => (
-                <td key={index} className={col.cellClassName || ""}>
-                   {/* Only show the fake ID in the first column, empty for others */}
-                   {index === 0 ? data.length + id + 1 : ""}
+        </thead>
+        <tbody>
+          {/* Active Data Rows */}
+          {currentData.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {columns.map((col, colIndex) => (
+                <td key={`${rowIndex}-${colIndex}`} className={col.cellClassName || ""}>
+                  {col.accessor === "id" 
+                    ? startIndex + rowIndex + 1 
+                    : col.render 
+                      ? col.render(row) 
+                      : row[col.accessor]}
                 </td>
-             ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+              ))}
+            </tr>
+          ))}
+
+          {/* Filler Rows to lock height */}
+          {emptyRows.map((_, i) => (
+            <tr key={`empty-${i}`} className={styles.emptyRow}>
+              {columns.map((col, colIndex) => (
+                <td key={colIndex} className={col.cellClassName || ""}>
+                  {colIndex === 0 ? startIndex + currentData.length + i + 1 : ""}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className={styles.footer}>
+        <div className={styles.navBtns}>
+          <button 
+            className={styles.navBtn} 
+            onClick={handlePrev} 
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button 
+            className={styles.navBtn} 
+            onClick={handleNext} 
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+        <span className={styles.pageInfo}>
+          Page {currentPage} of {totalPages}
+        </span>
+      </div>
+    </div>
   );
 };
 

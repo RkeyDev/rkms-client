@@ -1,9 +1,15 @@
-/* Generic Table Structure */
+.tableWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .table {
   width: 100%;
+  /* This prevents columns from resizing based on content length */
+  table-layout: fixed; 
   border-collapse: separate;
   border-spacing: 0;
-  margin-bottom: 15px;
 }
 
 .table th {
@@ -13,17 +19,62 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #888;
+  height: 40px;
+  box-sizing: border-box;
 }
 
 .table td {
   padding: 8px 16px;
   background-color: #CBCBCB;
   color: #1a1a1a;
-  border-bottom: 1px solid #1D1D1D; /* Row separation lines */
+  border-bottom: 1px solid #1D1D1D;
+  font-weight: 600;
+  
+  /* Strictly lock the row height */
+  height: 52px; 
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emptyRow td {
+  /* Match the data row height perfectly */
+  height: 52px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.navBtns {
+  display: flex;
+  gap: 8px;
+}
+
+.navBtn {
+  background-color: #2A2A2A;
+  color: white;
+  border: 1px solid #444;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
   font-weight: 600;
 }
 
-/* Empty Row styling used by the generic component */
-.emptyRow td {
-  height: 42px;
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  background-color: #2A2A2A;
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  font-size: 0.85rem;
+  color: #ccc;
 }
