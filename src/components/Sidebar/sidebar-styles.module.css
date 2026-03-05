@@ -219,3 +219,44 @@
     filter: invert(0.7);
     transition: filter 0.3s ease;
 }
+
+.navLinks {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 10px;
+}
+
+/* Updated NavItem to handle Link/NavLink behavior */
+.navItem {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #999;
+    cursor: pointer;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    
+    /* REMOVES BLUE AND UNDERSCORE */
+    text-decoration: none !important; 
+}
+
+/* Hover state: prevents blue/underscore from appearing */
+
+.navItem:hover {
+    color: #ffffff;
+    text-decoration: none; 
+background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Active state: when the URL matches the link */
+.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: default;
+    text-decoration: none;
+}

@@ -1,0 +1,87 @@
+.pageWrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #121212;
+    color: white;
+}
+
+.dashboardContainer {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-left: 260px;
+    transition: margin-left 0.5s ease;
+}
+
+/* Card - Exact same dimensions as Dashboard and Endpoints pages */
+.card {
+    background-color: #1D1D1D;
+    border: 1px solid #333;
+    width: 95%;
+    max-width: 900px; /* Locked size */
+    border-radius: 12px;
+    padding: 24px 32px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #888;
+    margin: 0;
+}
+
+/* Regenerate Button - Matches the style of your View/Settings buttons */
+.settingsBtn {
+    background-color: #31AFCF;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    font-weight: 200;
+    cursor: pointer;
+    min-width: 100px;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease;
+}
+
+.settingsBtn:hover {
+    opacity: 0.8;
+}
+
+.idCell {
+    background-color: transparent !important;
+    color: white !important;
+    text-align: center;
+    font-weight: 200;
+    font-size: 0.85rem;
+}
+
+/* Monospace font for the tokens/passwords */
+.passwordCell {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    color: #1a1a1a; /* Assuming they are inside the grey table cells */
+}

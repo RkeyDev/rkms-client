@@ -1,6 +1,12 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom"; // Use Link for navigation
 import styles from "./sidebar-styles.module.css";
 
+/**
+ * 
+ * @param {String} name 
+ * @returns Initals of a string (e.g: Roei Kleiner -> RK)
+ */
 function getInitials(name) {
   if (!name) return "";
   return name
@@ -12,15 +18,14 @@ function getInitials(name) {
     .toUpperCase();
 }
 
-function Sidebar({ page, name }) {
+function Sidebar({ name }) {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  const getNavLinkClass = (id) => {
-    const isActive = page.toLowerCase() === id;
-    return `${styles.navItem} ${isActive ? styles.active : ""}`;
-  };
+  // NavLink provides an 'isActive' boolean in its style/className callback
+  const getActiveClass = ({ isActive }) => 
+    `${styles.navItem} ${isActive ? styles.active : ""}`;
 
   const containerClass = `${styles.sidebarContainer} ${!isOpen ? styles.closed : ""}`;
 
@@ -28,33 +33,37 @@ function Sidebar({ page, name }) {
     <div className={containerClass}>
       <div className={styles.header}>
         <h1 className={styles.logo}>RKMS</h1>
-        <button className={styles.burgerBtn} onClick={toggleSidebar}>
+        <button className={styles.burgerBtn} onClick={toggleSidebar} aria-label="Toggle Sidebar">
           ☰
         </button>
       </div>
 
       <div className={styles.profileSection}>
         <div className={styles.avatar}>{getInitials(name)}</div>
-        <a href="#profile" className={styles.profileName}>
+        {/* Changed to Link for internal routing */}
+        <NavLink to="/profile" className={styles.profileName}>
           {name}
-        </a>
+        </NavLink>
       </div>
 
       <nav className={styles.navLinks}>
-        <div className={getNavLinkClass("dashboard")}>
+        {/* to="/" or "/dashboard" depending on your route setup */}
+        <NavLink to="/dashboard" className={getActiveClass}>
           <span className={styles.navText}>Dashboard</span>
-        </div>
-        <div className={getNavLinkClass("endpoints")}>
+        </NavLink>
+
+        <NavLink to="/endpoints" className={getActiveClass}>
           <span className={styles.navText}>Endpoints</span>
-        </div>
-        <div className={getNavLinkClass("connection")}>
+        </NavLink>
+
+        <NavLink to="/connection" className={getActiveClass}>
           <span className={styles.navText}>Connection</span>
-        </div>
+        </NavLink>
       </nav>
 
       <div className={styles.logoutSection}>
         <span className={styles.logoutText}>Logout</span>
-        <button className={styles.logoutBtn}>
+        <button className={styles.logoutBtn} onClick={() => console.log("Logging out...")}>
           <img src="/src/assets/logout-icon.png" alt="logout" />
         </button>
       </div>
